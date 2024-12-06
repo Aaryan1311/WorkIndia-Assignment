@@ -82,6 +82,10 @@ exports.confirmBooking = (req, res) => {
             console.error('Error:', err);
             return res.status(500).send('Cannot confirm booking at the moment');
         }
-        res.status(200).send('Booking confirmed successfully');
+        res.status(200).send(`Booking confirmed successfully
+            UserId: ${userId},
+            Train No.: ${trainId},
+            Seat No.:  ${seat_no}`
+        );
     });
 };
