@@ -19,7 +19,6 @@ const userAuth = (req, res, next) => {
     }
 
     try {
-        // Verify token
         const verified = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET); 
         req.user = verified;
         next();
