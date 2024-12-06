@@ -63,6 +63,40 @@ app.post('/login',(req,res) => {
 });
 
 
+
+//seat availability check
+app.get('/availability', (req,res) => {
+    const {source,destination} = req.query;
+    if(!source){
+        return res.status(400).send('Source is required');
+    }
+    if(!destination){
+        return res.status(400).send('Destination is required');
+    }
+
+    const query = `
+    SELECT * FROM trains
+    WHERE source = ? AND destination = ?
+    `
+
+    db.query(query,[source,destination], (err,result) => {
+        if(err){
+            console.log('Error: ', err);
+            return res.status(500).send('Error in fetching availability');
+        }
+
+        if(result.length === 0){
+            return res.status(404).send('No train found in the given route');
+        }
+
+        res.status(200).json(result);
+    });
+});
+
+
+
+
+
 const PORT = 3000;
 app.listen(PORT, () =>{
     console.log(`Server running at port ${PORT}`);
