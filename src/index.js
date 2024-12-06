@@ -1,10 +1,16 @@
 const db = require('./db');
 const express = require('express');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 app.use(express.json());
 
+
+
+
+//registration
 app.post('/register', async (req,res) => {
     const { username ,password , role } = req.body;
 
@@ -19,6 +25,43 @@ app.post('/register', async (req,res) => {
         res.status(201).send('User registration successfull');
     });
 });
+
+
+//login
+app.post('/login',(req,res) => {
+    const {username, password } = req.body;
+    const query = 'SELECT * FROM users WHERE username = ?';
+    db.query(query, [username], async (err,result) => {
+        if(err){
+            console.error('Error: '.replace, err);
+            return res.status(500).send('Login failed');
+        }
+
+        if(result.length === 0){
+            return res.status(400).send('User not found');
+        }
+
+        //check password
+        const user = result[0];
+        const flag = await bcrypt.compare(password,user.password);
+
+        if(!flag){
+            res.status(400).send('Incorrect Password');
+        }
+
+        const token = jwt.sign(
+            {
+                userId: user.id, role: user.role 
+            },
+
+            process.env.JWT_SECRET,
+            {expiresIn: '1h'}
+        );
+
+        res.status(200).json({message: 'Login successfully',token});
+    });
+});
+
 
 const PORT = 3000;
 app.listen(PORT, () =>{
