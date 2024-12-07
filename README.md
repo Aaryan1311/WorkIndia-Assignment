@@ -19,13 +19,14 @@ The system handles serial seat allocation and ensures smooth operations in concu
 
 1. **Clone the Repository**: *bash git clone cd*
 1. **Install Dependencies**: *bash npm install bcrypt dotenv express jsonwebtoken mysql2*
-1. **Create a `.env` File**: Add the following environment variables:  
-   DB\_HOST = localhost 
-   DB\_USER = root 
-   DB\_PASSWORD = "your sql password"
-   ` `DB\_NAME = irctc 
-   JWT\_SECRET = "your jwt secret"
-   ` `ADMIN\_API\_KEY = "your api key"
+1. **Create a `.env` File**: Add the following environment variables:    
+   DB\_HOST = localhost  
+   DB\_USER = root  
+   DB\_PASSWORD = "your sql password"  
+   DB\_NAME = irctc  
+   JWT\_SECRET = "your jwt secret"  
+   ADMIN\_API\_KEY = "your api key"  
+
 1. **Create the MySQL Database**: Use the following SQL commands: 
    sql CREATE DATABASE irctc;  
    USE irctc;  
@@ -42,8 +43,8 @@ The system handles serial seat allocation and ensures smooth operations in concu
    source VARCHAR(255) NOT NULL,  
    destination VARCHAR(255) NOT NULL,  
    total\_seats INT NOT NULL,  
-   ` `available\_seats INT NOT NULL,  
-   ` `created\_at TIMESTAMP DEFAULT CURRENT\_TIMESTAMP;
+   available\_seats INT NOT NULL,  
+   created\_at TIMESTAMP DEFAULT CURRENT\_TIMESTAMP;
 
    CREATE TABLE bookings  
    id INT AUTO\_INCREMENT PRIMARY KEY,  
@@ -73,29 +74,28 @@ The system handles serial seat allocation and ensures smooth operations in concu
 **1. Register**
 
 - **POST** /auth/register
-- **Example Body**:
+- **Example Body**:  
   {  
   `        `"username": "person1",  
   `        `"password": "password1",  
   `        `"role": "admin"  
   }  
 
-  ` {   
+  {   
   `         `"username": "person2",  
   `           `"password": "password2",  
   `           `"role": "user"  
-
   }  
 
 **2. Login**
 
 - **POST** /auth/login
-- **Example Body for Admin Login**: 
+- **Example Body for Admin Login**:  
   {  
   `            `"username": "person1",  
   `            `"password": "password1"  
   }
-- **Example Body for User Login**: 
+- **Example Body for User Login**:   
   {  
   `        `"username": "person2",  
   `        `"password": "password2"  
@@ -106,7 +106,7 @@ The system handles serial seat allocation and ensures smooth operations in concu
 **1. Add Train**
 
 - **POST** /admin/addTrain
-- **Example Body**:  
+- **Example Body**:   
   {  
   `       `"name": "train1",  
   `       `"source": "source1",  
@@ -124,7 +124,7 @@ The system handles serial seat allocation and ensures smooth operations in concu
 **2. Update Train Seats**
 
 - **PUT** /admin/updateSeats/1
-- **Example Body**: 
+- **Example Body**:  
   {  
   `           `"totalSeats": 400  
   }
@@ -139,7 +139,7 @@ The system handles serial seat allocation and ensures smooth operations in concu
 **1. Book a Seat**
 
 - **POST** /booking/book
-- **Example Body**: 
+- **Example Body**:  
   {  
   `        `"trainId": 1,  
   `        `"userId": 2  
