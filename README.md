@@ -1,6 +1,4 @@
-const fs = require('fs');
 
-const readmeContent = `
 # Assignment for SDE Internship Program at WorkIndia
 
 ## Project Description
@@ -210,12 +208,3 @@ The system handles serial seat allocation and ensures smooth operations in concu
 
 ---
 
-`;
-
-fs.writeFile('README.md', readmeContent, (err) => {
-    if (err) {
-        console.error('Error writing README.md:', err);
-    } else {
-        console.log('README.md file created successfully!');
-    }
-});
